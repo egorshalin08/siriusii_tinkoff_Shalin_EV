@@ -1,1 +1,1 @@
-# siriusii_tinkoff_Shalin_EV
+Код решния задание второго этапа в main.py
