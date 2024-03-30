@@ -1,5 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
+from gensim.models import Word2Vec
+import numpy as np
+import re
+import pymorphy3
+import nltk
+from sklearn.cluster import KMeans
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 url = 'https://otzovik.com/reviews/bank_tinkoff_kreditnie_sistemi/'
 
@@ -51,14 +58,6 @@ for page_number in range(1, 423):
         rev_date = soup.select("div.item-right > div.rating-wrap > span[class='review-postdate dtreviewed'] > span")
         response_dates.append(rev_date[0].text)
 
-
-
-from gensim.models import Word2Vec
-import numpy as np
-import re
-import pymorphy3
-import nltk
-from sklearn.cluster import KMeans
 
 morph = pymorphy3.MorphAnalyzer()
 stopwords = nltk.corpus.stopwords.words('russian')
@@ -114,10 +113,6 @@ kmeans = KMeans(n_clusters=5) #можно менять
 kmeans.fit(X)
 kmeans_clusters = kmeans.labels_
 
-print("K-means Clusters:", kmeans_clusters)
-
-
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 tfidf_vectorizer = TfidfVectorizer()
 tfidf_matrix = tfidf_vectorizer.fit_transform(response_texts)
@@ -142,6 +137,8 @@ num_resp = len(response_values)
 print(f"Положительных отзывов {good_resp}, это {good_resp / num_resp * 100}% от общего количества.")
 print(f"Положительных отзывов {bad_resp}, это {bad_resp / num_resp * 100}% от общего количества.")
 print(f"Положительных отзывов {neutral_resp}, это {neutral_resp / num_resp * 100}% от общего количества.")
+
+
 
 
 
