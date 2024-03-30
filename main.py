@@ -7,6 +7,8 @@ import pymorphy3
 import nltk
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
+import matplotlib.pyplot as plt
+nltk.download('stopwords')
 
 url = 'https://otzovik.com/reviews/bank_tinkoff_kreditnie_sistemi/'
 
@@ -106,15 +108,19 @@ kmeans_clusters = kmeans.labels_
 tfidf_vectorizer = TfidfVectorizer()
 tfidf_matrix = tfidf_vectorizer.fit_transform(response_texts)
 
-for cluster_idx in np.unique(kmeans_clusters):
+top_words = []
+un_clust = sorted(list(set(kmeans_clusters)))
+
+for cluster_idx in un_clust:
     cluster_indices = np.where(kmeans_clusters == cluster_idx)[0]
     cluster_texts = [response_texts[i] for i in cluster_indices]
     cluster_tfidf = tfidf_matrix[cluster_indices].mean(axis=0)
     cluster_tfidf = np.asarray(cluster_tfidf).reshape(-1)
     
     significant_indices = np.argpartition(cluster_tfidf, -10)[-10:]
-
     significant_words = [tfidf_vectorizer.get_feature_names_out()[i] for i in significant_indices]
+
+    top_words.append(significant_words)
 
 
 good_resp = response_values.count("5") + response_values.count("5")
@@ -126,6 +132,18 @@ num_resp = len(response_values)
 print(f"Положительных отзывов {good_resp}, это {good_resp / num_resp * 100}% от общего количества.")
 print(f"Положительных отзывов {bad_resp}, это {bad_resp / num_resp * 100}% от общего количества.")
 print(f"Положительных отзывов {neutral_resp}, это {neutral_resp / num_resp * 100}% от общего количества.")
+
+diagram = []
+
+for i in un_clust:
+    diagram.append(kmeans_clusters.count(i))
+
+plt.pie(diagram, labels=un_clust)
+plt.show()
+
+print("Самые частые слова для каждого кластера:")
+for i in un_clust:
+    print(f"Кластер {i}, самые частые слова: {top_words[i]}.")
 
 
 
