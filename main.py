@@ -39,7 +39,7 @@ for page_number in range(1, 423):
 
         page_full_response = requests.get(url_to_full_response1, headers=headers)
 
-        soup1 = BeautifulSoup(page.text, 'lxml')
+        soup1 = BeautifulSoup(page_full_response.text, 'lxml')
 
         response_value = soup1.select("div.item-right > div.rating-wrap > div[class='rating-score tooltip-right'] > span")
         response_values.append(response_value[0].text)
