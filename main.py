@@ -135,6 +135,7 @@ print(f"Отрицательных отзывов {bad_resp}, это {bad_resp /
 print(f"Нейтральных отзывов {neutral_resp}, это {neutral_resp / num_resp * 100}% от общего количества.")
 
 diagram = []
+kmeans_clusters = list(kmeans_clusters)
 
 for i in un_clust:
     diagram.append(kmeans_clusters.count(i))
