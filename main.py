@@ -17,7 +17,7 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
 }
 
-respose_texts = []
+response_texts = []
 response_values = []
 response_dates = []
 
@@ -146,9 +146,9 @@ print("Самые частые слова для каждого кластера
 for i in un_clust:
     print(f"Кластер {i}, самые частые слова: {top_words[i]}.")
 
-positive_reviews = defaultdict(int)
-neutral_reviews = defaultdict(int)
-negative_reviews = defaultdict(int)
+positive_resp = defaultdict(int)
+neutral_resp = defaultdict(int)
+negative_resp = defaultdict(int)
 
 dat_to_dat = {"янв":"01", "фев":"02", "мар":"03", "апр":"04", "мая":"05", "июн":"06", "июл":"07", "авг":"08", "сен":"09", "окт":"10", "ноя":"11", "дек":"12"}
 
