@@ -126,7 +126,7 @@ for cluster_idx in un_clust:
     top_words.append(significant_words)
 
 
-good_resp = response_values.count("5") + response_values.count("5")
+good_resp = response_values.count("5") + response_values.count("4")
 bad_resp = response_values.count("2") + response_values.count("1")
 neutral_resp = response_values.count("3")
 
