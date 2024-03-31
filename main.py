@@ -8,6 +8,7 @@ import nltk
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
+from collections import defaultdict
 nltk.download('stopwords')
 
 url = 'https://otzovik.com/reviews/bank_tinkoff_kreditnie_sistemi/'
@@ -130,8 +131,8 @@ neutral_resp = response_values.count("3")
 num_resp = len(response_values)
 
 print(f"Положительных отзывов {good_resp}, это {good_resp / num_resp * 100}% от общего количества.")
-print(f"Положительных отзывов {bad_resp}, это {bad_resp / num_resp * 100}% от общего количества.")
-print(f"Положительных отзывов {neutral_resp}, это {neutral_resp / num_resp * 100}% от общего количества.")
+print(f"Отрицательных отзывов {bad_resp}, это {bad_resp / num_resp * 100}% от общего количества.")
+print(f"Нейтральных отзывов {neutral_resp}, это {neutral_resp / num_resp * 100}% от общего количества.")
 
 diagram = []
 
@@ -145,8 +146,41 @@ print("Самые частые слова для каждого кластера
 for i in un_clust:
     print(f"Кластер {i}, самые частые слова: {top_words[i]}.")
 
+positive_reviews = defaultdict(int)
+neutral_reviews = defaultdict(int)
+negative_reviews = defaultdict(int)
 
+dat_to_dat = {"янв" = "01", "фев" = "02", "мар" = "03", "апр" = "04", "мая" = "05", "июн" = "06", "июл" = "07", "авг" = "08", "сен" = "09", "окт" = "10", "ноя" = "11", "дек" = "12"}
 
+resp_count = len(response_dates)
 
+for i in range(resp_count):
+    date = response_dates[i].split()
+    year_month = date[2] + '-' + dat_to_dat[date[1]]
+    if int(response_values[i]) > 3:
+        positive_resp[year_month] += 1
+    elif int(response_values[i]) < 3:
+        negative_resp[year_month] += 1
+    else:
+        neutral_resp[year_month] += 1
+
+x = list(positive_resp.keys()) 
+y_positive = list(positive_resp.values())
+y_neutral = [neutral_resp[month] for month in x]
+y_negative = [negative_resp[month] for month in x]
+
+plt.plot(x, y_positive, label='Положительные', marker='o')
+plt.plot(x, y_neutral, label='Нейтральные', marker='o')
+plt.plot(x, y_negative, label='Отрицательные', marker='o')
+
+plt.xlabel('Год и месяц')
+plt.ylabel('Количество отзывов')
+plt.title('Статистика отзывов')
+plt.xticks(rotation=45)
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+
+plt.show()
 
 
