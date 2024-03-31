@@ -39,26 +39,28 @@ for page_number in range(1, 423):
 
         page_full_response = requests.get(url_to_full_response1, headers=headers)
 
-        response_value = soup.select("div.item-right > div.rating-wrap > div[class='rating-score tooltip-right'] > span")
+        soup1 = BeautifulSoup(page.text, 'lxml')
+
+        response_value = soup1.select("div.item-right > div.rating-wrap > div[class='rating-score tooltip-right'] > span")
         response_values.append(response_value[0].text)
 
-        rev_topic = soup.select("div.item-right > h1")
+        rev_topic = soup1.select("div.item-right > h1")
         rev_topic = rev_topic[0].text
 
-        rev_plus = soup.select("div.item-right > div.review-plus")
+        rev_plus = soup1.select("div.item-right > div.review-plus")
         rev_plus = rev_plus[0].text
 
-        rev_minus = soup.select("div.item-right > div.review-minus")
+        rev_minus = soup1.select("div.item-right > div.review-minus")
         rev_minus = rev_minus[0].text
 
-        rev_text = soup.select("div.item-right > div[class='review-body description']")
+        rev_text = soup1.select("div.item-right > div[class='review-body description']")
         rev_text = rev_text[0].text
 
         all_rev_text = rev_topic + ' ' + rev_plus + ' ' + rev_minus + ' ' + rev_text
 
         response_texts.append(all_rev_text)
 
-        rev_date = soup.select("div.item-right > div.rating-wrap > span[class='review-postdate dtreviewed'] > span")
+        rev_date = soup1.select("div.item-right > div.rating-wrap > span[class='review-postdate dtreviewed'] > span")
         response_dates.append(rev_date[0].text)
 
 
