@@ -56,7 +56,7 @@ for page_number in range(1, 423):
 
         all_rev_text = rev_topic + ' ' + rev_plus + ' ' + rev_minus + ' ' + rev_text
 
-        respose_texts.append(all_rev_text)
+        response_texts.append(all_rev_text)
 
         rev_date = soup.select("div.item-right > div.rating-wrap > span[class='review-postdate dtreviewed'] > span")
         response_dates.append(rev_date[0].text)
